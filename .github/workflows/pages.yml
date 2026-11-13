@@ -1,0 +1,60 @@
+name: Deploy CineBox lên GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '5 17 * * *'   # 00:05 giờ Việt Nam: cập nhật lịch chiếu theo ngày mới
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: pdo_sqlite, mbstring
+          tools: composer
+
+      - name: Cài thư viện
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Tạo database + dữ liệu mẫu
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          touch database/database.sqlite
+          php artisan migrate --seed --force
+
+      - name: Xuất website thành HTML tĩnh
+        run: >
+          php artisan export:static --out=build/static
+          --base=/${{ github.event.repository.name }}
+          --full=https://codespaces.new/${{ github.repository }}?quickstart=1
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/static
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

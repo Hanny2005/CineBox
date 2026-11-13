@@ -54,3 +54,9 @@ Tài khoản mẫu (mật khẩu `password`): `admin@cinema.test`, `staff@cinema
 ## Chuyển sang Supabase
 Trong `.env`: `DB_CONNECTION=pgsql`, `DB_URL="postgresql://postgres.<REF>:<PASS>@aws-0-<REGION>.pooler.supabase.com:5432/postgres?sslmode=require"`.
 Mật khẩu có ký tự đặc biệt thì URL-encode. Sau đó chạy `php artisan migrate:fresh --seed`. PHP cần bật `pdo_pgsql`.
+
+## GitHub Pages
+- `php artisan export:static --out=build/static --base=/CineBox --full=<link bản đầy đủ>` xuất các trang công khai thành HTML tĩnh. Lệnh render qua HTTP kernel; trang chọn ghế được render trực tiếp từ view `bookings.seats`.
+- Lệnh tự đổi link tuyệt đối thành đường dẫn `/CineBox/...` (xem `map()`), chèn thanh thông báo và chặn mọi form POST.
+- Thêm trang công khai mới thì thêm nó vào `$pages` trong `ExportStatic` và vào `map()` nếu URL có query string.
+- Workflow `.github/workflows/pages.yml` build khi push lên `main` và mỗi ngày lúc 00:05 giờ Việt Nam.

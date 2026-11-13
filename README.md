@@ -15,6 +15,10 @@
 </p>
 
 <p align="center">
+  🌐 <b>Xem website:</b> <a href="https://hanny2005.github.io/CineBox/"><b>hanny2005.github.io/CineBox</b></a>
+</p>
+
+<p align="center">
   <a href="https://codespaces.new/Hanny2005/CineBox?quickstart=1"><img src="https://github.com/codespaces/badge.svg" alt="Open in GitHub Codespaces"></a>
 </p>
 
@@ -29,6 +33,7 @@
 
 | Cách | Làm gì |
 |---|---|
+| **Xem bản xem trước** | Mở [hanny2005.github.io/CineBox](https://hanny2005.github.io/CineBox/): đủ giao diện trang chủ, phim, lịch chiếu, sơ đồ chọn ghế, đăng nhập. Đặt vé và đăng nhập thật cần chạy bản đầy đủ (2 cách dưới) |
 | **Chạy ngay trên trình duyệt** (không cần cài gì) | Bấm nút **Open in GitHub Codespaces** ở trên → đợi khoảng 2–3 phút → website tự mở ở cổng 8000. Cần đăng nhập GitHub (tài khoản free có giờ dùng miễn phí mỗi tháng). |
 | **Windows** | `git clone https://github.com/Hanny2005/CineBox.git` → mở thư mục `CineBox` → bấm đúp **`setup.bat`** |
 | **macOS / Linux** | `git clone https://github.com/Hanny2005/CineBox.git && cd CineBox && ./setup.sh` |
@@ -41,6 +46,7 @@ Script tự làm hết: cài thư viện, tạo `.env`, tạo database SQLite k�
 - [Công nghệ](#công-nghệ)
 - [Chạy nhanh](#-chạy-nhanh)
 - [Cài đặt và chạy](#cài-đặt-và-chạy)
+- [Bản xem trước trên GitHub Pages](#bản-xem-trước-trên-github-pages)
 - [Kết nối Supabase](#kết-nối-supabase)
 - [Tài khoản mẫu](#tài-khoản-mẫu)
 - [Thiết kế cơ sở dữ liệu](#thiết-kế-cơ-sở-dữ-liệu)
@@ -109,6 +115,18 @@ php artisan serve      # mở http://localhost:8000
 | `could not find driver` | Mở `php.ini` (xem vị trí bằng `php --ini`), bỏ dấu `;` trước `extension=pdo_sqlite` (và `extension=pdo_pgsql` nếu dùng Supabase) |
 | `Failed to listen on 127.0.0.1:8000 ... forbidden` (Windows) | Windows đang giữ cổng 8000: chạy `php artisan serve --port=8080` hoặc `powershell -ExecutionPolicy Bypass -File scripts/serve.ps1` |
 | `Your requirements could not be resolved` | Kiểm tra lại `php -v`, cần PHP 8.2 trở lên |
+
+## Bản xem trước trên GitHub Pages
+
+GitHub Pages không chạy được PHP, nên workflow `.github/workflows/pages.yml` làm như sau:
+1. Chạy Laravel trên GitHub Actions (PHP 8.3, SQLite và dữ liệu mẫu).
+2. Dùng lệnh `php artisan export:static` để xuất mọi trang công khai thành HTML: trang chủ, danh sách phim, chi tiết phim, lịch chiếu 7 ngày, sơ đồ chọn ghế, đăng nhập, đăng ký.
+3. Đăng lên **https://hanny2005.github.io/CineBox/**.
+
+Website được build lại mỗi lần push và **mỗi ngày lúc 0h** để lịch chiếu luôn bắt đầu từ hôm nay.
+Các thao tác cần máy chủ (đặt vé, đăng nhập) sẽ hiện thông báo kèm nút mở bản đầy đủ bằng Codespaces.
+
+Cấu hình một lần: **Settings → Pages → Source: GitHub Actions**.
 
 ## Kết nối Supabase
 
@@ -183,6 +201,8 @@ routes/web.php, routes/console.php
 scripts/                      setup-windows.ps1, serve.ps1 (Windows)
 setup.bat / setup.sh          cài đặt + chạy bằng một lệnh
 .devcontainer/                cấu hình GitHub Codespaces
+app/Console/Commands/ExportStatic.php   xuất HTML tĩnh cho GitHub Pages
+.github/workflows/pages.yml   tự build và đăng GitHub Pages
 SKILL.md                      hướng dẫn cho AI agent (Claude Code...) làm việc với dự án
 ```
 
