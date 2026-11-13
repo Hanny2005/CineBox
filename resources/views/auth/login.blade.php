@@ -35,7 +35,7 @@
     <button class="auth-btn" type="submit"><i class="bi bi-box-arrow-in-right"></i> Đăng nhập</button>
 </form>
 
-@if (app()->isLocal())
+@if (app()->isLocal() || config('app.demo'))
     @php
         $demos = [
             ['admin', 'shield-check', 'Quản trị viên', 'admin@cinema.test', 'Toàn quyền: phim, rạp, lịch chiếu, đơn vé, doanh thu'],

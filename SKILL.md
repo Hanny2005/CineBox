@@ -54,3 +54,9 @@ Tài khoản mẫu (mật khẩu `password`): `admin@cinema.test`, `staff@cinema
 ## Chuyển sang Supabase
 Trong `.env`: `DB_CONNECTION=pgsql`, `DB_URL="postgresql://postgres.<REF>:<PASS>@aws-0-<REGION>.pooler.supabase.com:5432/postgres?sslmode=require"`.
 Mật khẩu có ký tự đặc biệt thì URL-encode. Sau đó chạy `php artisan migrate:fresh --seed`. PHP cần bật `pdo_pgsql`.
+
+## Triển khai
+- `Dockerfile` + `docker/start.sh` + `render.yaml`: deploy lên Render (free, Docker). SQLite được seed lại mỗi lần khởi động; đặt `DB_CONNECTION=pgsql` + `DB_URL` để dùng Supabase.
+- `APP_DEMO=true` hiện tài khoản mẫu ở trang đăng nhập ngay cả trên production.
+- `bootstrap/app.php` có `trustProxies(at: '*')` để chạy đúng sau proxy HTTPS (Render, Codespaces).
+- `site/`: trang giới thiệu tĩnh, deploy lên GitHub Pages bằng `.github/workflows/pages.yml`.

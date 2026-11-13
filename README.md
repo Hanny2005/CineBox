@@ -15,7 +15,14 @@
 </p>
 
 <p align="center">
+  🌐 <b>Trang giới thiệu:</b> <a href="https://hanny2005.github.io/CineBox/">hanny2005.github.io/CineBox</a>
+  &nbsp;·&nbsp;
+  🎬 <b>Website chạy thật:</b> <a href="https://cinebox.onrender.com">cinebox.onrender.com</a>
+</p>
+
+<p align="center">
   <a href="https://codespaces.new/Hanny2005/CineBox?quickstart=1"><img src="https://github.com/codespaces/badge.svg" alt="Open in GitHub Codespaces"></a>
+  <a href="https://render.com/deploy?repo=https://github.com/Hanny2005/CineBox"><img src="https://render.com/images/deploy-to-render-button.svg" alt="Deploy to Render" height="32"></a>
 </p>
 
 <p align="center">
@@ -29,6 +36,7 @@
 
 | Cách | Làm gì |
 |---|---|
+| **Xem bản demo** | Mở [cinebox.onrender.com](https://cinebox.onrender.com). Bản free nên lần đầu mở cần đợi khoảng 1 phút để máy chủ khởi động |
 | **Chạy ngay trên trình duyệt** (không cần cài gì) | Bấm nút **Open in GitHub Codespaces** ở trên → đợi khoảng 2–3 phút → website tự mở ở cổng 8000. Cần đăng nhập GitHub (tài khoản free có giờ dùng miễn phí mỗi tháng). |
 | **Windows** | `git clone https://github.com/Hanny2005/CineBox.git` → mở thư mục `CineBox` → bấm đúp **`setup.bat`** |
 | **macOS / Linux** | `git clone https://github.com/Hanny2005/CineBox.git && cd CineBox && ./setup.sh` |
@@ -41,6 +49,7 @@ Script tự làm hết: cài thư viện, tạo `.env`, tạo database SQLite k�
 - [Công nghệ](#công-nghệ)
 - [Chạy nhanh](#-chạy-nhanh)
 - [Cài đặt và chạy](#cài-đặt-và-chạy)
+- [Triển khai online (Render)](#triển-khai-online-render)
 - [Kết nối Supabase](#kết-nối-supabase)
 - [Tài khoản mẫu](#tài-khoản-mẫu)
 - [Thiết kế cơ sở dữ liệu](#thiết-kế-cơ-sở-dữ-liệu)
@@ -109,6 +118,20 @@ php artisan serve      # mở http://localhost:8000
 | `could not find driver` | Mở `php.ini` (xem vị trí bằng `php --ini`), bỏ dấu `;` trước `extension=pdo_sqlite` (và `extension=pdo_pgsql` nếu dùng Supabase) |
 | `Failed to listen on 127.0.0.1:8000 ... forbidden` (Windows) | Windows đang giữ cổng 8000: chạy `php artisan serve --port=8080` hoặc `powershell -ExecutionPolicy Bypass -File scripts/serve.ps1` |
 | `Your requirements could not be resolved` | Kiểm tra lại `php -v`, cần PHP 8.2 trở lên |
+
+## Triển khai online (Render)
+
+Repo có sẵn `Dockerfile`, `docker/start.sh` và `render.yaml`. Cách triển khai:
+
+1. Đăng nhập [render.com](https://render.com) bằng tài khoản GitHub.
+2. Bấm nút **Deploy to Render** ở đầu trang, hoặc vào **New → Blueprint** rồi chọn repo `CineBox` → **Apply**.
+3. Đợi build khoảng 5–8 phút. Render cấp link dạng `https://cinebox.onrender.com`.
+
+Mặc định bản online dùng **SQLite**, và dữ liệu mẫu được tạo lại mỗi lần máy chủ khởi động (gói free tự ngủ sau 15 phút không có truy cập).
+Muốn giữ dữ liệu thật thì dùng Supabase: trong Render → **Environment**, đặt `DB_CONNECTION=pgsql` và thêm `DB_URL` (Session pooler).
+
+Trang giới thiệu tĩnh nằm trong thư mục `site/` và tự deploy lên GitHub Pages bằng workflow `.github/workflows/pages.yml`
+(Settings → Pages → Source: **GitHub Actions**). Nếu Render cấp link khác, sửa biến `LIVE_URL` trong `site/index.html`.
 
 ## Kết nối Supabase
 
@@ -183,6 +206,8 @@ routes/web.php, routes/console.php
 scripts/                      setup-windows.ps1, serve.ps1 (Windows)
 setup.bat / setup.sh          cài đặt + chạy bằng một lệnh
 .devcontainer/                cấu hình GitHub Codespaces
+Dockerfile, docker/, render.yaml   deploy online lên Render
+site/                         trang giới thiệu (GitHub Pages)
 SKILL.md                      hướng dẫn cho AI agent (Claude Code...) làm việc với dự án
 ```
 
