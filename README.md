@@ -37,7 +37,7 @@
 
 | Cách | Làm gì |
 |---|---|
-| **Xem bản xem trước** | Mở [hanny2005.github.io/CineBox](https://hanny2005.github.io/CineBox/): đủ giao diện trang chủ, phim, lịch chiếu, sơ đồ chọn ghế, đăng nhập. Đặt vé và đăng nhập thật cần chạy bản đầy đủ (2 cách dưới) |
+| **Xem bản xem trước** | Mở [https://word-veterans-mood-humor.trycloudflare.com): đủ giao diện trang chủ, phim, lịch chiếu, sơ đồ chọn ghế, đăng nhập. Đặt vé và đăng nhập thật cần chạy bản đầy đủ (2 cách dưới) |
 | **Chạy ngay trên trình duyệt** (không cần cài gì) | Bấm nút **Open in GitHub Codespaces** ở trên → đợi khoảng 2–3 phút → website tự mở ở cổng 8000. Cần đăng nhập GitHub (tài khoản free có giờ dùng miễn phí mỗi tháng). |
 | **Windows** | `git clone https://github.com/Hanny2005/CineBox.git` → mở thư mục `CineBox` → bấm đúp **`setup.bat`** |
 | **macOS / Linux** | `git clone https://github.com/Hanny2005/CineBox.git && cd CineBox && ./setup.sh` |
