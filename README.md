@@ -15,8 +15,12 @@
 </p>
 
 <p align="center">
-  🌐 <b>Xem website:</b> <a href="https://hanny2005.github.io/CineBox/"><b>hanny2005.github.io/CineBox</b></a>
+  🎬 <b>Dùng thử website:</b> <a href="https://word-veterans-mood-humor.trycloudflare.com"><b>word-veterans-mood-humor.trycloudflare.com</b></a>
+  <br>
+ 
 </p>
+
+<p align="center"><i>Tài khoản thử: <code>user@cinema.test</code> / <code>password</code> · Link dùng thử chỉ hoạt động khi máy chủ đang bật</i></p>
 
 <p align="center">
   <a href="https://codespaces.new/Hanny2005/CineBox?quickstart=1"><img src="https://github.com/codespaces/badge.svg" alt="Open in GitHub Codespaces"></a>
